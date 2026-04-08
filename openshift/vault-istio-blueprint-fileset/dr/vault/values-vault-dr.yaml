@@ -1,0 +1,29 @@
+server:
+  ha:
+    enabled: true
+    replicas: 3
+    raft:
+      enabled: true
+      setNodeId: true
+  dataStorage:
+    enabled: true
+    size: 50Gi
+    storageClass: REPLACE_ME_STORAGE_CLASS
+  auditStorage:
+    enabled: true
+    size: 10Gi
+    storageClass: REPLACE_ME_STORAGE_CLASS
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+  serviceAccount:
+    create: true
+    name: vault
+ui:
+  enabled: true
+injector:
+  enabled: false

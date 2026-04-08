@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: vault-pki-ingress-dc
+spec:
+  vault:
+    path: pki-ingress-dc/sign/role-istio-gateway-dc
+    server: https://vault-dc.bank.example.com:8200
+    caBundle: REPLACE_ME_BASE64_CA_BUNDLE
+    auth:
+      kubernetes:
+        mountPath: /v1/auth/kubernetes-dc
+        role: cert-manager-pki-issuer-dc
+        serviceAccountRef:
+          name: cert-manager

@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: istio-ingressgateway-tls-dc
+  namespace: istio-system
+spec:
+  secretName: istio-ingressgateway-tls-dc
+  issuerRef:
+    name: vault-pki-ingress-dc
+    kind: ClusterIssuer
+  commonName: api.dc.bank.example.com
+  dnsNames:
+    - api.dc.bank.example.com
+    - apps.dc.bank.example.com
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+    - server auth
+  duration: 720h
+  renewBefore: 168h
