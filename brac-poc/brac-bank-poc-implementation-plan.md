@@ -96,7 +96,6 @@ This POC addresses all of those areas through a single integrated design.
 ### 4.2 Environment model
 - all components run on Comptech internal KVM-backed infrastructure
 - all configurations are stored in Git
-- Codex is used from a controlled automation runner to generate, update, validate, and execute implementation assets
 - OpenShift workloads are delivered using GitOps
 - VM workloads are delivered using Terraform plus Ansible
 
@@ -161,7 +160,7 @@ flowchart TB
 
     subgraph Ops["Automation & Control"]
         JUMP["Jump Host"]
-        RUNNER["Automation Runner (Codex + Terraform + Ansible + oc)"]
+        RUNNER["Automation Runner (Terraform + Ansible + oc)"]
         GIT["Git Repositories"]
     end
 
@@ -647,7 +646,7 @@ JBoss will run on VMs and host B-ORP:
 
 ---
 
-## 10. GitOps, Automation, and Codex Operating Model
+## 10. GitOps, Automation
 
 ### 10.1 Source of truth
 All configurations, code, templates, manifests, and automation scripts will be kept in Git repositories.
@@ -680,15 +679,7 @@ Used for:
 - observability components
 - selected cluster add-ons
 
-#### Codex
-Used from a controlled automation runner to:
-- update repo content
-- generate implementation assets
-- execute approved CLI workflows
-- run validation scripts
-- maintain documentation consistency
 
----
 
 ## 11. Deployment Sequence
 
@@ -1000,6 +991,5 @@ This POC is designed to be:
 - demonstrable through clear evidence
 - repeatable through automation
 - secure by design
-- suitable for Codex-assisted implementation without losing engineering control
 
 The resulting environment will show not only that the requested tools can be installed, but that they can be integrated into a coherent, auditable, resilient banking platform.
