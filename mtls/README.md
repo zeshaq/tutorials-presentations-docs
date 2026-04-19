@@ -4,12 +4,14 @@ This folder contains a complete teaching pack for explaining how mTLS, OpenShift
 
 The explanations are aligned to the architecture already present in this repository:
 
-- OpenShift or Kubernetes runs the platform
-- Istio runs the service mesh
+- OpenShift runs the platform
+- OpenShift Service Mesh 3 runs the service mesh
+- Gateway API is the default ingress and egress configuration model
 - Istio CA handles east-west workload mTLS inside the mesh
 - Vault is the system of record for PKI and secrets
 - cert-manager requests and renews selected certificates from Vault
 - External Secrets Operator syncs non-certificate secrets from Vault KV into Kubernetes
+- egress gateways control outbound traffic from the mesh to external systems
 
 ## Suggested reading order
 
@@ -22,9 +24,21 @@ The explanations are aligned to the architecture already present in this reposit
 7. [appendix-1-istio-overview.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-1-istio-overview.md)
 8. [appendix-2-openshift-service-mesh-3-ambient-mode.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-2-openshift-service-mesh-3-ambient-mode.md)
 
+## Architecture baseline for this pack
+
+These docs now assume this target model:
+
+- Red Hat OpenShift Service Mesh 3
+- Kubernetes Gateway API for ingress
+- Kubernetes Gateway API or supported OSSM 3 gateway pattern for egress
+- Vault PKI for externally managed gateway certificates
+- Vault KV for application secrets
+- cert-manager for certificate automation
+- ESO for KV secret sync
+
 ## One-sentence summary
 
-In this design, **Istio secures service-to-service traffic with mesh-issued workload certificates**, while **Vault plus cert-manager secures externally exposed gateway/server certificates**, and **Vault KV plus External Secrets Operator delivers application secrets**.
+In this design, **OpenShift Service Mesh 3 secures service-to-service traffic with mesh-issued workload certificates**, while **Vault plus cert-manager secures Gateway API ingress certificates**, **Vault KV plus External Secrets Operator delivers application secrets**, and **egress gateways control outbound traffic leaving the mesh**.
 
 ## Appendix
 

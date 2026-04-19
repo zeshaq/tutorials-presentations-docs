@@ -4,13 +4,14 @@ This article explains the full trust model before we go into individual flows.
 
 ## The big picture
 
-In this setup, OpenShift hosts the platform, Istio provides the service mesh, Vault provides centralized PKI and secret storage, cert-manager automates certificate requests, and External Secrets Operator syncs application secrets from Vault KV into Kubernetes.
+In this setup, OpenShift hosts the platform, **OpenShift Service Mesh 3** provides the service mesh, **Gateway API** is the preferred model for ingress and egress gateways, Vault provides centralized PKI and secret storage, cert-manager automates certificate requests, and External Secrets Operator syncs application secrets from Vault KV into Kubernetes.
 
 The most important design decision is this:
 
 - **Istio CA is responsible for internal mesh identity**
-- **Vault PKI is responsible for selected platform-managed certificates, especially ingress and server certificates**
+- **Vault PKI is responsible for selected platform-managed certificates, especially Gateway API ingress certificates**
 - **Vault KV is responsible for non-certificate application secrets**
+- **Gateway API ingress and egress gateways are the default north-south control points in OSSM 3**
 
 For a standalone summary of Istio’s platform role, see [Appendix 1: Istio Overview](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-1-istio-overview.md).
 
@@ -21,9 +22,10 @@ flowchart LR
     ROOT["Offline Root CA"] --> INT["Vault Intermediate CA"]
 
     subgraph OCP["OpenShift Cluster"]
-        subgraph ISTIO["Istio Mesh"]
+        subgraph ISTIO["OpenShift Service Mesh 3"]
             CP["Istiod / Istio CA"]
-            IGW["Istio Ingress Gateway"]
+            IGW["Gateway API ingress gateway"]
+            EGW["Gateway API egress gateway"]
             A["Service A + sidecar"]
             B["Service B + sidecar"]
         end
@@ -55,6 +57,8 @@ flowchart LR
     CP -->|"workload identities"| A
     CP -->|"workload identities"| B
     A -->|"mTLS"| B
+    A -->|"controlled outbound traffic"| EGW
+    B -->|"controlled outbound traffic"| EGW
 ```
 
 ## Trust boundaries
@@ -80,10 +84,12 @@ This is the platform trust anchor for issued certificates and stored secrets.
 OpenShift runs:
 
 - workloads
-- sidecars
+- service mesh data plane
 - cert-manager
 - ESO
 - Istio control plane
+- Gateway API ingress gateway namespace
+- Gateway API egress gateway namespace
 
 OpenShift stores resulting TLS material and synced app secrets as Kubernetes Secrets, but it does not become the original authority for those values.
 
@@ -106,8 +112,9 @@ The answer is that the two systems solve different operational problems:
 | Function | Primary component | Why |
 |---|---|---|
 | Internal pod-to-pod mTLS | Istio CA | Native mesh identity and rotation |
-| Public or north-south gateway certificate | Vault PKI via cert-manager | Controlled PKI policy and automated renewal |
+| Gateway API ingress certificate | Vault PKI via cert-manager | Controlled PKI policy and automated renewal |
 | App passwords, API keys, tokens | Vault KV via ESO | Central secret storage and sync |
+| Controlled outbound internet or partner access | Egress gateway | Auditable and policy-controlled mesh exit |
 | Trust anchor governance | Offline Root CA | Controlled signing of intermediates |
 
 ## End-to-end trust story
@@ -117,7 +124,8 @@ sequenceDiagram
     participant Root as Offline Root CA
     participant Vault as Vault PKI
     participant CM as cert-manager
-    participant IGW as Istio Ingress Gateway
+    participant IGW as Gateway API ingress gateway
+    participant EGW as Egress gateway
     participant Istiod as Istio CA
     participant A as Service A
     participant B as Service B
@@ -131,6 +139,7 @@ sequenceDiagram
     Istiod->>A: Issue workload cert
     Istiod->>B: Issue workload cert
     A->>B: Establish service-to-service mTLS
+    B->>EGW: Exit mesh through controlled egress path
 ```
 
 ## What to emphasize in the session
@@ -139,4 +148,5 @@ Say this clearly and repeatedly:
 
 - The gateway certificate and the workload certificate are not the same certificate
 - The client-facing TLS path and the service-to-service mTLS path are different security flows
+- In OSSM 3, Gateway API is the preferred ingress and egress model for this design
 - Vault, cert-manager, and Istio are cooperating, not duplicating each other

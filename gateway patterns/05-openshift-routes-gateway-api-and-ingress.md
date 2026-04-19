@@ -1,10 +1,10 @@
 # 5. OpenShift Routes, Gateway API, And Ingress
 
-This article explains how OpenShift-native exposure fits with F5, WSO2, and Istio.
+This article explains how OpenShift-native exposure fits with F5, WSO2, and **OpenShift Service Mesh 3** when **Gateway API** is your default ingress model.
 
 ## The main problem
 
-OpenShift gives you Routes and ingress options, but enterprise traffic may already be entering through F5 and WSO2.
+OpenShift gives you Routes and ingress options, but in your target model enterprise traffic already enters through F5 and WSO2 and then reaches the cluster through Gateway API ingress.
 
 That means you need to decide whether OpenShift-native entry is:
 
@@ -23,7 +23,7 @@ flowchart LR
     R --> APP["Application"]
 ```
 
-This is usually only clean for simple non-API-governed applications.
+This is usually only clean for simple non-API-governed applications and is not the default for your target architecture.
 
 ### Model B: Route to WSO2
 
@@ -37,17 +37,17 @@ flowchart LR
 
 This can work, but it often creates redundant public-entry modeling if F5 already owns the edge.
 
-### Model C: F5 and WSO2 remain primary, OpenShift ingress stays internal
+### Model C: F5 and WSO2 remain primary, Gateway API ingress stays internal and preferred
 
 ```mermaid
 flowchart LR
     C["Client"] --> F5["F5"]
     F5 --> W["WSO2"]
-    W --> I["Istio ingress or Gateway API ingress"]
+    W --> I["OSSM 3 Gateway API ingress"]
     I --> APP["Service"]
 ```
 
-This is usually the cleanest enterprise pattern.
+This is the default enterprise pattern for these updated docs.
 
 ## When Routes are still useful
 
@@ -58,7 +58,7 @@ Routes are still useful for:
 - quick non-production exposure
 - technical plumbing where needed
 
-But they should not automatically become the enterprise public entry layer.
+But they should not automatically become the enterprise public entry layer in this architecture.
 
 ## Custom names
 
@@ -79,7 +79,7 @@ To do this cleanly:
 
 ## Gateway API direction
 
-If you are using modern Istio or ambient mode, Gateway API is often the cleaner long-term model.
+In OpenShift Service Mesh 3, Gateway API is the preferred model to standardize ingress and egress behavior, especially if you want one Kubernetes-native model across both classic and ambient deployments.
 
 ```mermaid
 flowchart LR
@@ -96,3 +96,5 @@ Use OpenShift Routes as the primary public abstraction only when:
 - the platform is simple
 - you do not need a separate enterprise API gateway pattern
 - F5 and WSO2 are not intended to be the main governing layers
+
+For your target design, Routes are secondary and Gateway API ingress is primary.
