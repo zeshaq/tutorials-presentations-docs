@@ -16,8 +16,9 @@ This folder contains the implementation-focused architecture for this exact targ
 ## Reading order
 
 1. [01-target-architecture.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/01-target-architecture.md)
-2. [02-certificate-flows.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/02-certificate-flows.md)
-3. [03-implementation-principles.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/03-implementation-principles.md)
+2. [02-implementation-diagram.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/02-implementation-diagram.md)
+3. [03-certificate-flows.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/02-certificate-flows.md)
+4. [04-implementation-principles.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/03-implementation-principles.md)
 
 ## Target traffic model
 
