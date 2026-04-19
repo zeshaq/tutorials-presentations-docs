@@ -24,6 +24,12 @@ Core message:
 - multiple trust flows
 - each tool has a clear job
 
+### Part 1A: Give a quick overview of Istio itself
+
+Before going deep into certificates, explain Istio in one minute as the communication layer for microservices.
+
+Use [appendix-1-istio-overview.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-1-istio-overview.md).
+
 ## Opening diagram
 
 ```mermaid

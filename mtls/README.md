@@ -19,10 +19,17 @@ The explanations are aligned to the architecture already present in this reposit
 4. [04-secrets-certificates-and-vault-integration.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/04-secrets-certificates-and-vault-integration.md)
 5. [05-certificate-lifecycle-rotation-and-failure-flows.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/05-certificate-lifecycle-rotation-and-failure-flows.md)
 6. [06-session-walkthrough-and-speaking-notes.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/06-session-walkthrough-and-speaking-notes.md)
+7. [appendix-1-istio-overview.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-1-istio-overview.md)
 
 ## One-sentence summary
 
 In this design, **Istio secures service-to-service traffic with mesh-issued workload certificates**, while **Vault plus cert-manager secures externally exposed gateway/server certificates**, and **Vault KV plus External Secrets Operator delivers application secrets**.
+
+## Appendix
+
+The pack now includes a separate Istio reference page:
+
+- [Appendix 1: Istio Overview](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-1-istio-overview.md)
 
 ## The key distinction to repeat during the session
 

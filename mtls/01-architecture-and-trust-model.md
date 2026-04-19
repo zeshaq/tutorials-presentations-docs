@@ -12,6 +12,8 @@ The most important design decision is this:
 - **Vault PKI is responsible for selected platform-managed certificates, especially ingress and server certificates**
 - **Vault KV is responsible for non-certificate application secrets**
 
+For a standalone summary of Istio’s platform role, see [Appendix 1: Istio Overview](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-1-istio-overview.md).
+
 ## Logical architecture
 
 ```mermaid
