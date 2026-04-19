@@ -20,6 +20,7 @@ This folder contains the implementation-focused architecture for this exact targ
 3. [03-certificate-flows.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/02-certificate-flows.md)
 4. [04-implementation-principles.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/03-implementation-principles.md)
 5. [05-phase-wise-guideline.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/05-phase-wise-guideline.md)
+6. [06-wso2-certificate-options.md](/Users/ze/Documents/tutorials-presentations-docs/gateway-implmentation/06-wso2-certificate-options.md)
 
 ## Target traffic model
 

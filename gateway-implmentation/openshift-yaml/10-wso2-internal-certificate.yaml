@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wso2-internal-tls
+  namespace: wso2-system
+spec:
+  secretName: wso2-internal-tls
+  issuerRef:
+    name: vault-pki-platform-internal
+    kind: ClusterIssuer
+  commonName: REPLACE_ME_WSO2_INTERNAL_HOSTNAME
+  dnsNames:
+    - REPLACE_ME_WSO2_INTERNAL_HOSTNAME
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  usages:
+    - server auth
+  duration: 720h
+  renewBefore: 168h

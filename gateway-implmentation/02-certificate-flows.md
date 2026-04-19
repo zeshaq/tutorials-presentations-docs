@@ -44,6 +44,58 @@ sequenceDiagram
     IGW->>Svc: Forward into the mesh
 ```
 
+## WSO2 certificate recommendation
+
+For this architecture, the cleanest recommendation is:
+
+- use a `DigiCert` certificate only on `F5` for the public internet-facing endpoint
+- use a `Vault PKI`-issued certificate on `WSO2` for its internal-facing TLS endpoint
+- use a `Vault PKI`-issued certificate on the `Gateway API ingress` listener
+- use `Istio CA` only for in-mesh workload identity and mTLS
+
+### Why this is the best split
+
+This keeps the trust domains clean:
+
+- `F5` handles public trust
+- `WSO2` and `Gateway API ingress` participate in internal platform trust
+- `Istio` handles service-to-service runtime trust
+
+### Recommended WSO2 pattern
+
+```mermaid
+flowchart LR
+    CLIENT["Internet client"] --> F5["F5 with DigiCert certificate"]
+    F5 --> WSO2["WSO2 with Vault-issued internal certificate"]
+    WSO2 --> IGW["Gateway API ingress with Vault-issued certificate"]
+    IGW --> MESH["Ambient mesh with Istio CA"]
+```
+
+### When this recommendation is especially strong
+
+Use a Vault-issued WSO2 certificate when:
+
+- WSO2 is not directly exposed as the public internet endpoint
+- F5 is the real enterprise edge
+- you want one internal PKI model across middleware and gateways
+- you want controlled renewal and issuance policy
+
+### When you might choose differently
+
+You might choose a different certificate source only if:
+
+- WSO2 itself must directly serve internet clients and therefore needs public-trust TLS
+- your enterprise mandates a different internal PKI for middleware certificates
+
+### Practical recommendation
+
+In your current design, the default should be:
+
+- `Client -> F5`: DigiCert
+- `F5 -> WSO2`: Vault-issued internal TLS
+- `WSO2 -> Gateway API ingress`: Vault-issued TLS or mTLS
+- `Inside mesh`: Istio CA mTLS
+
 ## East-west certificate flow
 
 Inside the mesh, keep the PKI model simple:

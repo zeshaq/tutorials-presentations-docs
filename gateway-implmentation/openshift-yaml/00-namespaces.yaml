@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-system
+  labels:
+    istio-discovery: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-cni
+  labels:
+    istio-discovery: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ztunnel
+  labels:
+    istio-discovery: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mesh-ingress
+  labels:
+    istio-discovery: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mesh-egress
+  labels:
+    istio-discovery: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app-sample
+  labels:
+    istio-discovery: enabled
+    istio.io/dataplane-mode: ambient
+    gateway-access: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: wso2-system
+  labels:
+    istio-discovery: enabled
