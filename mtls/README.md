@@ -20,6 +20,7 @@ The explanations are aligned to the architecture already present in this reposit
 5. [05-certificate-lifecycle-rotation-and-failure-flows.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/05-certificate-lifecycle-rotation-and-failure-flows.md)
 6. [06-session-walkthrough-and-speaking-notes.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/06-session-walkthrough-and-speaking-notes.md)
 7. [appendix-1-istio-overview.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-1-istio-overview.md)
+8. [appendix-2-openshift-service-mesh-3-ambient-mode.md](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-2-openshift-service-mesh-3-ambient-mode.md)
 
 ## One-sentence summary
 
@@ -30,6 +31,7 @@ In this design, **Istio secures service-to-service traffic with mesh-issued work
 The pack now includes a separate Istio reference page:
 
 - [Appendix 1: Istio Overview](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-1-istio-overview.md)
+- [Appendix 2: How It Works In OpenShift Service Mesh 3 Ambient Mode](/Users/ze/Documents/tutorials-presentations-docs/mtls/appendix-2-openshift-service-mesh-3-ambient-mode.md)
 
 ## The key distinction to repeat during the session
 
